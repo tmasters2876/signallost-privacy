@@ -1,7 +1,7 @@
 # Privacy Policy — Signal Lost
 
 **Effective date:** June 15, 2026
-**Last updated:** June 15, 2026
+**Last updated:** November 5, 2026
 
 Signal Lost is an iOS narrative game published by Thomas Masters. This policy explains what data the app handles, what leaves your device, and what does not.
 
@@ -13,9 +13,9 @@ If you have questions, contact: **tmasters2876@gmail.com**
 
 - Signal Lost does **not** require an account, sign-in, or any personal information.
 - Almost everything happens on your device. Game progress, journal entries, conversations, and notification scheduling are stored locally and never sent anywhere.
-- A small number of in-game radio frequencies use an **AI-generated response** feature. When you transmit on those frequencies, your typed message is sent to a server we operate, forwarded to Anthropic's Claude API to generate a reply, and the reply is sent back to your device.
+- Since version 1.3, **nothing you type ever leaves your device**. Every radio reply in the game is scripted and stored in the app. (Earlier versions had an AI reply feature on a few frequencies; see "Versions before 1.3" below.)
 - We do **not** collect analytics, advertising identifiers, location, contacts, or any tracking data of any kind.
-- There are no in-app purchases, no subscriptions, and no third-party SDKs aside from the AI proxy described below.
+- There are no subscriptions and no third-party SDKs. The only purchases are optional tips ("Support the Station"), processed entirely by Apple.
 
 ---
 
@@ -35,22 +35,18 @@ This information is stored using Apple's SwiftData framework in the app's privat
 
 ---
 
-## What the app sends off-device, and only when you trigger it
+## What the app sends off-device
 
-The only feature that transmits data off-device is the **AI radio reply** feature on a small set of in-game frequencies (currently 47.2, 55.5, 63.8, and 88.1 MHz, capped at 2 calls per frequency per playthrough).
+**Signal Lost 1.3 and later:** the game itself makes no network calls. Every radio frequency, including 47.2, 55.5, 63.8 and 88.1 MHz, answers with scripted content stored inside the app.
 
-When you tap **TRANSMIT** on one of those frequencies, the app sends the following over HTTPS to a Cloudflare Worker we operate at a private URL:
+The only things that involve Apple's servers are features Apple runs for you:
 
-- The text you typed
-- A short character description (a "persona" prompt that tells the AI how to respond — chosen by us, not by you)
-- The radio frequency value (e.g., `47.2`)
-- Up to the last 2 exchanges of dialog on that frequency, so the AI has short conversational context (we keep at most 4 messages of history per frequency on your device, then drop the oldest)
+- **Tips ("Support the Station"):** optional purchases processed by Apple through the App Store. We never see your payment information; the app only learns whether a purchase succeeded. Apple's handling is covered by Apple's Privacy Policy.
+- **Game Center:** if you are signed in to Game Center, your achievements are reported to Apple's Game Center service under Apple's Privacy Policy. We do not receive your Game Center identity. If you are not signed in, nothing is sent and the game plays the same.
 
-The Cloudflare Worker forwards the same data to **Anthropic's Claude API**, receives a text reply, and returns it to your device. The Worker does this exclusively to keep the Anthropic API key off the app binary; it does **not** retain logs of message content for analytics, advertising, or any other purpose. Standard short-term server logs (timestamps, response codes) are retained only as long as needed to operate the service and are not associated with any personal identifier.
+### Versions before 1.3
 
-**Important:** Anthropic processes the message text under its own privacy policy and terms. Anthropic's policies are available at [anthropic.com/legal/privacy](https://www.anthropic.com/legal/privacy). We do not control Anthropic's data practices.
-
-If you do not want any of your text leaving your device, simply do not transmit on the AI-enabled frequencies. All other radio frequencies use locally-stored scripted content and never trigger a network call.
+Earlier versions (up to 1.2) had an **AI radio reply** feature on 47.2, 55.5, 63.8 and 88.1 MHz, capped at 2 replies per frequency. When you transmitted on one of those frequencies, the app sent the text you typed, the frequency, a short character description chosen by us, and up to the last 2 exchanges on that frequency over HTTPS to a Cloudflare Worker we operated, which forwarded it to **Anthropic's Claude API** for a reply. The Worker kept no logs of message content; Anthropic processed the text under its own [privacy policy](https://www.anthropic.com/legal/privacy). Version 1.3 removed this feature completely. If you are still on an older version, updating stops all of it.
 
 ---
 
@@ -95,19 +91,18 @@ Signal Lost is rated 12+ on the App Store and is not directed at children under 
 Because Signal Lost stores all your data on your device, you control it directly:
 
 - **Delete all game data:** Open the app → Settings → DANGER → RESET STATION. This permanently wipes your save.
-- **Stop all data transmission:** Avoid transmitting on the AI-enabled frequencies (47.2, 55.5, 63.8, 88.1 MHz). Or disable notifications in iOS Settings → Signal Lost.
+- **Stop all data transmission:** Update to version 1.3 or later, which sends nothing off-device. Notifications are local and can be turned off in iOS Settings → Signal Lost.
 - **Remove the app entirely:** Delete it from your home screen. All on-device storage is removed by iOS as part of the standard uninstall.
 
-If you've previously transmitted on an AI frequency and want the Cloudflare Worker's short-term logs of your IP-level request metadata removed, email **tmasters2876@gmail.com** and we will remove them as soon as reasonably possible.
+If you transmitted on an AI frequency in a version before 1.3 and want any remaining short-term request logs removed, email **tmasters2876@gmail.com** and we will remove them as soon as reasonably possible.
 
 ---
 
 ## Third parties
 
-We share data with exactly two third parties, and only when you trigger an AI-enabled transmission:
+Signal Lost 1.3 and later shares no data with any third party. Apple processes tips and Game Center as described above, under Apple's own policies.
 
-1. **Cloudflare, Inc.** — operates the Worker that proxies AI requests. Cloudflare's privacy policy: [cloudflare.com/privacypolicy](https://www.cloudflare.com/privacypolicy/)
-2. **Anthropic, PBC** — operates the Claude AI model that generates the reply text. Anthropic's privacy policy: [anthropic.com/legal/privacy](https://www.anthropic.com/legal/privacy)
+Versions before 1.3 shared typed messages on the AI frequencies with **Cloudflare, Inc.** ([privacy policy](https://www.cloudflare.com/privacypolicy/)), which ran the proxy, and **Anthropic, PBC** ([privacy policy](https://www.anthropic.com/legal/privacy)), which generated the replies.
 
 We do not sell, rent, lease, or otherwise share any user data with any other party, ever, for any purpose. There is no advertising network. There is no data broker relationship.
 
